@@ -3,14 +3,31 @@ import MinusCode from 'minus-code';
 
 const mccode = new MinusCode();
 
+function sanitizeHtml(input: string): string {
+    return input
+        .replace(/<script[\s\S]*?<\/script>/gi, '')
+        .replace(/\son\w+\s*=\s*["'][^"']*["']/gi, '')
+        .replace(/\son\w+\s*=\s*[^\s>]*/gi, '')
+        .replace(/javascript\s*:/gi, '')
+        .replace(/vbscript\s*:/gi, '');
+}
+
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<string>
 ) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Content-Type', 'image/svg+xml');
-    let { w, h } = req.query;
-    let { data } = req.body;
+
+    const rawW = req.query.w;
+    const rawH = req.query.h;
+    const w = Math.max(1, Math.min(10000, parseInt(typeof rawW === 'string' ? rawW : '500', 10) || 500));
+    const h = Math.max(1, Math.min(10000, parseInt(typeof rawH === 'string' ? rawH : '500', 10) || 500));
+
+    const { data } = req.body;
+    const decoded = typeof data === 'string' ? mccode.decode(data) : '';
+    const safeData = sanitizeHtml(typeof decoded === 'string' ? decoded : '');
+
     const svg = `
 <svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
 <style>
@@ -31,7 +48,7 @@ div.sensei > div#img > img {width: auto;height: 200px;float: right;margin: 5px 1
 
 <foreignObject x="0" y="0" width="${w}" height="${h}">
 <div xmlns="http://www.w3.org/1999/xhtml">
-${mccode.decode(data)}
+${safeData}
 </div>
 </foreignObject>
 </svg>
