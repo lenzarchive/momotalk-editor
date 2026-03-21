@@ -1,4 +1,4 @@
-import { Locales } from '../i18n';
+import { Locales } from '@/lib/i18n';
 import { fileInfo, schaleInfo, studentsJson, studentInfo, blueArcBoxInfo, blueArcBoxLang } from './students';
 
 export async function getStudentsJson(locale: string): Promise<studentsJson> {

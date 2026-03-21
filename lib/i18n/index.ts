@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getSettingFun } from "../setting";
+import { getSettingFun } from "@/components/setting";
 
 export type Locales = 'zh-CN' | 'zh-TW' | 'en-US';
 

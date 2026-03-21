@@ -23,8 +23,8 @@ import type { ContentMenuSet } from '@/components/contentMenu';
 import styles from '@/styles/Chat.module.scss';
 
 //i18n
-import { fillBlank, useLocale } from '@/components/i18n';
-import chat from '@/components/i18n/config/chat';
+import { fillBlank, useLocale } from '@/lib/i18n';
+import chat from '@/lib/i18n/config/chat';
 
 //Methods
 import axios from 'axios';

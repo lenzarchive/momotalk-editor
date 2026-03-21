@@ -10,8 +10,8 @@ import type { blueArcBoxInfo, studentsJson } from '@/components/students/student
 import styles from '@/styles/Info.module.scss';
 
 //i18n
-import { useLocale } from '@/components/i18n';
-import info from '@/components/i18n/config/info';
+import { useLocale } from '@/lib/i18n';
+import info from '@/lib/i18n/config/info';
 
 //Methods
 import { useEffect, useState } from 'react';
@@ -28,7 +28,7 @@ interface ContentProps {
     lo: string;
 }
 
-function Content({ id, allInfo, bioText, lo }: ContentProps) {
+function Content({ id, allInfo, bioText }: ContentProps) {
     const info = getStudentInfo(allInfo, id);
     return (
         <div id={styles.content}>
